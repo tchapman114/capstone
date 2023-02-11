@@ -26,9 +26,9 @@ include('database.php');
     $R = mysqli_query($conn, $Query);
 
     if ($R) {
-        $Message = "Successfully added user into USER table! ";
+        $Message = "Success! ";
     } else {
-        $Message = "Error inserting user data.";
+        $Message = "Error creating new account.";
     }
 }
 
