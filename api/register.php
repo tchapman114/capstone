@@ -1,6 +1,4 @@
 <?php
-//TODO should we hash card numbers ?
-// is there other validations we should add ?
 
 include('database.php'); 
 

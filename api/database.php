@@ -1,13 +1,6 @@
  <?php
  $conn = mysqli_connect("localhost", "root", "", "EasyCheckout", "3307");
 
- // Check connection
- if(mysqli_connect_error())
- echo "Connection Error.\n";
- else
- echo "database Connection was successful!\n";
-
-
  $encodedData = file_get_contents('php://input');  // take data from react native fetch API
  $decodedData = json_decode($encodedData, true);
 
