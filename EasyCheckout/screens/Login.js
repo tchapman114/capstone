@@ -48,6 +48,7 @@ export default class Login extends Component {
       })
         .then((Response) => Response.json())
         .then((Response) => {
+          //TODO do we want to get rid of alert ?
           alert(Response[0].Message);
           if (Response[0].Message == "Success!") {
             console.log("true");
@@ -73,15 +74,19 @@ export default class Login extends Component {
     const { navigation } = this.props;
     return (
       <View style={styles.viewStyle}>
-        <View>
+        <View style={styles.inputContainer}>
+          <Text>Email</Text>
           <TextInput
-            placeholder="Enter Email"
+            style={styles.textInput}
+            placeholder=" Enter Email"
             onChangeText={(email) => this.setState({ email })}
           />
         </View>
 
         <View>
+          <Text>Password</Text>
           <TextInput
+            style={styles.textInput}
             placeholder="Enter Password"
             secureTextEntry={this.state.secureTextEntry ? true : false}
             onChangeText={(password) => this.setState({ password })}
@@ -96,20 +101,21 @@ export default class Login extends Component {
           </TouchableOpacity>
         </View>
 
-        <View>
+        <View style={styles.loginButtonContainer}>
           {/* Call API when user signs in */}
           <Pressable
             onPress={() => {
               this.FetchRecord();
             }}
           >
-            <Text>Sign In</Text>
+            <Text style={styles.loginButtonText}>LOGIN</Text>
           </Pressable>
         </View>
         <View>
           {/* navigate back to Register screen when user wants to create account */}
+          <Text style={styles.orText}>OR</Text>
           <Pressable onPress={() => navigation.navigate("Register")}>
-            <Text>Create new Account</Text>
+            <Text style={styles.signUpText}>Create new Account!</Text>
           </Pressable>
         </View>
       </View>

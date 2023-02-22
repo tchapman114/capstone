@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TextInput, Button, TouchableOpacity } from "react-native";
+import { View, TextInput, Button, TouchableOpacity, Text } from "react-native";
 import styles from "../style/style.js";
 import Feather from "react-native-vector-icons/Feather";
 
@@ -42,9 +42,8 @@ export default class Register extends Component {
       alert("Use atleast 01 special character!!!");
     } else if (/[ ]/.test(password)) {
       alert("Don't include space in password!!!");
-    }
-     else {
-      var InsertAPIURL = "http://localhost/capstone/api/register.php"; //API to render register 
+    } else {
+      var InsertAPIURL = "http://localhost/capstone/api/register.php"; //API to render register
 
       var headers = {
         Accept: "application/json",
@@ -57,25 +56,25 @@ export default class Register extends Component {
         email: email,
         phone: phone,
         cardnumber: cardnumber,
-        password: password
+        password: password,
       };
 
-      fetch(InsertAPIURL,{
-        method:'POST',
-        headers:headers,
-        body: JSON.stringify(Data) //convert data to JSON
-    })
-    .then((response)=>response.json()) //check response type of API (CHECK OUTPUT OF DATA IS IN JSON)
-    .then((response)=>{
-      alert(response[0].Message);       // If data is in JSON => Display alert msg
-      this.props.navigation.navigate("Login"); //Navigate to next screen if authentications are valid
-    })
-    .catch((error)=>{
-        alert("Error Occurred: " + error);
-        console.log(error);
-    })
+      fetch(InsertAPIURL, {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(Data), //convert data to JSON
+      })
+        .then((response) => response.json()) //check response type of API (CHECK OUTPUT OF DATA IS IN JSON)
+        .then((response) => {
+          alert(response[0].Message); // If data is in JSON => Display alert msg
+          this.props.navigation.navigate("Login"); //Navigate to next screen if authentications are valid
+        })
+        .catch((error) => {
+          alert("Error Occurred: " + error);
+          console.log(error);
+        });
     }
-  }
+  };
 
   updateSecureTextEntry() {
     this.setState({
@@ -93,32 +92,40 @@ export default class Register extends Component {
 
   render() {
     return (
-      <View>
-        <TextInput
-          placeholder="Enter First Name"
-          style={styles.textInput}
-          onChangeText={(firstname) => this.setState({ firstname })}
-        />
-        <TextInput
-          placeholder="Enter Last Name"
-          style={styles.textInput}
-          onChangeText={(lastname) => this.setState({ lastname })}
-        />
+      <View style={styles.viewStyle}>
+        <Text>Name*</Text>
+        <View style={styles.registrationInputContainer}>
+          <TextInput
+            placeholder="Enter First Name"
+            style={styles.registrationInput}
+            onChangeText={(firstname) => this.setState({ firstname })}
+          />
+          <TextInput
+            placeholder="Enter Last Name"
+            style={styles.registrationInput}
+            onChangeText={(lastname) => this.setState({ lastname })}
+          />
+        </View>
+
+        <Text style={{ marginTop: 15 }}>Email Address*</Text>
         <TextInput
           placeholder="Enter Email"
           style={styles.textInput}
           onChangeText={(email) => this.setState({ email })}
         />
+        <Text>Phone Number*</Text>
         <TextInput
           placeholder="Enter Phone Number"
           style={styles.textInput}
           onChangeText={(phone) => this.setState({ phone })}
         />
+        <Text>Credit Card*</Text>
         <TextInput
           placeholder="Enter Card Number"
           style={styles.textInput}
           onChangeText={(cardnumber) => this.setState({ cardnumber })}
         />
+        <Text>Password*</Text>
         <TextInput
           placeholder="Enter Password"
           secureTextEntry={this.state.secureTextEntry ? true : false}
@@ -133,12 +140,15 @@ export default class Register extends Component {
           )}
         </TouchableOpacity>
 
-        <Button
-          title="Register"
-          onPress={() => {
-            this.InsertRecord();
-          }}
-        />
+        <View style={styles.loginButtonContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              this.InsertRecord();
+            }}
+          >
+            <Text style={styles.loginButtonText}>SIGN UP</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }

@@ -73,7 +73,7 @@ export default function Barcode() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#336800",
+    backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center",
   },
