@@ -1,12 +1,25 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import React, { useState, useEffect, route, navigation } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  ActivityIndicator,
+} from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 
-export default function Barcode() {
+export default function Barcode({ route, navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [dataFetch, setDataFetch] = useState(null);
   const [text, setText] = useState("Not Yet Scanned");
+  const [isLoading, setLoading] = useState(true);
+  const [scancode, setScanCode] = useState(null);
+  const [price, setPrice] = useState(null);
+  const [name, setName] = useState(null);
+  const [productId, setProductId] = useState(null);
+  const { userId } = route.params;
 
   const askForCameraPermission = () => {
     (async () => {
@@ -23,6 +36,7 @@ export default function Barcode() {
   // Barcode Scanned Result
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
+    // use data to send to API
     setText(data);
     console.log("Type: " + type + "\nData: " + data);
   };
@@ -47,6 +61,72 @@ export default function Barcode() {
       </View>
     );
   }
+  //API Call to get price and item name
+  const GetScanCode = async () => {
+    var headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    };
+
+    var Data = {
+      // HARDCODED UNTIL WE CAN GET SOMEONE TO TEST ON THEIR PHONE!!!
+      scancode: "0070847012474", // text?
+    };
+
+    var APIURL = "http://localhost/capstone/api/getScancode.php";
+
+    await fetch(APIURL, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(Data),
+    })
+      .then((Response) => Response.json())
+      .then((Response) => {
+        console.log("getScancode Response: ", Response);
+        setDataFetch(Response);
+        setScanCode(text);
+        setPrice(dataFetch[0][0].price);
+        setName(dataFetch[0][0].name);
+        setProductId(dataFetch[0][0].id);
+        console.log("Scanned Price: ", price);
+        console.log("Scanned Name: ", name);
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  function InsertUserProduct() {
+    var headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    };
+    var APIURL = "http://localhost/capstone/api/insertUserProduct.php";
+    var Data = {
+      userId: userId,
+      productId: productId,
+    };
+    console.log(userId);
+
+    fetch(APIURL, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(Data),
+    })
+      .then((Response) => Response.json())
+      .then((Response) => {
+        alert(Response[0].Message);
+        if (Response[0].Message == "Success") {
+          console.log("true");
+        }
+      })
+      .catch((error) => {
+        console.error("ERROR: " + error);
+      });
+  }
 
   // Returns the View
   return (
@@ -57,15 +137,22 @@ export default function Barcode() {
           style={{ height: 400, width: 400 }}
         />
       </View>
+      {/* we can prob remove {text} output. only for testing */}
       <Text style={styles.maintext}>{text}</Text>
+      <Text style={styles.maintext}>{name}</Text>
+      <Text style={styles.maintext}>{price}</Text>
 
-      {scanned && (
+      {
         <Button
-          title={"Scan Again?"}
-          onPress={() => setScanned(false)}
+          title={"Scan Item?"}
+          onPress={() => {
+            setScanned(false);
+            GetScanCode();
+            InsertUserProduct();
+          }}
           color="003FAF"
         />
-      )}
+      }
     </View>
   );
 }

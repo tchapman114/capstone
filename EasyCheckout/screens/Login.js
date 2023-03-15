@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import {
   View,
   Pressable,
@@ -36,7 +36,7 @@ export default class Login extends Component {
       };
 
       var Data = {
-        //fetching email and password from database
+        //sending email and password to fetch from database
         email: email,
         password: password,
       };
@@ -50,9 +50,17 @@ export default class Login extends Component {
         .then((Response) => {
           //TODO do we want to get rid of alert ?
           alert(Response[0].Message);
-          if (Response[0].Message == "Success!") {
+          if (Response[0].Message == "Success") {
             console.log("true");
-            this.props.navigation.navigate("HomeScreen"); //REPLACE WITH WHATEVER WE CALL HOME SCREEN
+            id = Response[0].Id;
+            console.log("UserId: ", id);
+            // this.props.navigation.navigate("DetailsScreen", {
+            //   userId: id,
+            // });
+            // Storing id, using routes to pass id throughout app and can be used in other queries
+            this.props.navigation.navigate("DetailsScreen", {
+              userId: id,
+            });
           }
           console.log(Data);
         })
@@ -78,7 +86,7 @@ export default class Login extends Component {
           <Text>Email</Text>
           <TextInput
             style={styles.textInput}
-            placeholder=" Enter Email"
+            placeholder="Enter Email"
             onChangeText={(email) => this.setState({ email })}
           />
         </View>
@@ -106,6 +114,7 @@ export default class Login extends Component {
           <Pressable
             onPress={() => {
               this.FetchRecord();
+              this.state.handleSubmit;
             }}
           >
             <Text style={styles.loginButtonText}>LOGIN</Text>
