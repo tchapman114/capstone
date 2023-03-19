@@ -27,6 +27,15 @@ function DetailsScreen({ route, navigation }) {
           })
         }
       />
+
+      <Button
+        title="View Profile"
+        onPress={() =>
+          navigation.navigate("UserProfile", {
+            userId: userId,
+          })
+        }
+      />
       <Button title="Go back" onPress={() => navigation.goBack()} />
     </View>
   );
