@@ -28,7 +28,7 @@ export default class Login extends Component {
       alert("Required Field Is Missing");
     } else {
       // API endpoint URL
-      var APIURL = "http://localhost/capstone/api/login.php";
+      var APIURL = "http://192.168.1.67:80/capstone/api/login.php";
 
       var headers = {
         Accept: "application/json",

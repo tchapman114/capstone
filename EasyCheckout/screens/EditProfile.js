@@ -1,5 +1,14 @@
-import React, { Component, route, FlatList } from "react";
-import { View, TextInput, Button, TouchableOpacity, Text } from "react-native";
+import React, { Component } from "react";
+import {
+  View,
+  TextInput,
+  Button,
+  TouchableOpacity,
+  Text,
+  Alert,
+} from "react-native";
+import styles from "../style/style";
+import Feather from "react-native-vector-icons/Feather";
 
 export default class EditProfile extends Component {
   constructor(props) {
@@ -14,6 +23,7 @@ export default class EditProfile extends Component {
       cardnumber: "",
       password: "",
       dataFetch: "",
+      secureTextEntry: true,
     };
   }
 
@@ -26,7 +36,7 @@ export default class EditProfile extends Component {
     var phone = this.state.phone;
     var cardnumber = this.state.cardnumber;
     var password = this.state.password;
-    var APIURL = "http://localhost/capstone/api/update.php";
+    var APIURL = "http://192.168.1.67:80/capstone/api/update.php";
 
     var headers = {
       Accept: "application/json",
@@ -50,15 +60,18 @@ export default class EditProfile extends Component {
     })
       .then((Response) => Response.json())
       .then((Response) => {
-        alert(Response[0].Message);
         if (Response[0].Message == "Success") {
-          console.log("true");
-          // this.props.navigation.navigate("EditProfile", {
-          //   userId: id,
-          // });
+          console.log("Successfully updated profile");
+          Alert.alert("Success!", "Profile has been updated.", [
+            {
+              text: "OK",
+              onPress: () =>
+                this.props.navigation.navigate("DetailsScreen", {
+                  userId: this.state.userId.userId,
+                }),
+            },
+          ]);
         }
-        console.log(Data);
-        console.log(Response[0].SQL);
       })
       .catch((error) => {
         console.error("ERROR: " + error);
@@ -71,7 +84,7 @@ export default class EditProfile extends Component {
     var Data = {
       id: userId,
     };
-    fetch("http://localhost/capstone/api/fetchForUpdate.php", {
+    fetch("http://192.168.1.67:80/capstone/api/fetchForUpdate.php", {
       method: "POST",
       body: JSON.stringify(Data),
     })
@@ -94,49 +107,88 @@ export default class EditProfile extends Component {
       });
   };
 
+  updateSecureTextEntry() {
+    this.setState({
+      ...this.state,
+      secureTextEntry: !this.state.secureTextEntry,
+    });
+  }
+
+  updateConfirmSecureTextEntry() {
+    this.setState({
+      ...this.state,
+      confirmSecureTextEntry: !this.state.confirmSecureTextEntry,
+    });
+  }
+
   render() {
     return (
-      <View>
+      <View style={styles.viewStyle}>
+        {/* TODO : Paige do button or icon arrow indicating to go back to home screen */}
+        <Button
+          title="Go back to home screen"
+          onPress={() =>
+            this.props.navigation.navigate("DetailsScreen", {
+              userId: this.state.userId.userId,
+            })
+          }
+        />
         <Text>Name*</Text>
-        <View>
+        <View style={styles.registrationInputContainer}>
           <TextInput
+            placeholder="First Name"
+            style={styles.registrationInput}
             value={this.state.firstname}
             onChangeText={(firstname) => this.setState({ firstname })}
           />
           <TextInput
+            placeholder="Last Name"
+            style={styles.registrationInput}
             value={this.state.lastname}
             onChangeText={(lastname) => this.setState({ lastname })}
           />
         </View>
 
-        <Text>Email Address*</Text>
+        <Text style={{ marginTop: 15 }}>Email Address*</Text>
         <TextInput
+          style={styles.textInput}
           value={this.state.email}
           onChangeText={(email) => this.setState({ email })}
         />
         <Text>Phone Number*</Text>
         <TextInput
+          style={styles.textInput}
           value={this.state.phone}
           onChangeText={(phone) => this.setState({ phone })}
         />
         <Text>Credit Card*</Text>
         <TextInput
+          style={styles.textInput}
           value={this.state.cardnumber}
           onChangeText={(cardnumber) => this.setState({ cardnumber })}
         />
         <Text>Password*</Text>
         <TextInput
+          secureTextEntry={this.state.secureTextEntry ? true : false}
+          style={styles.textInput}
           value={this.state.password}
           onChangeText={(password) => this.setState({ password })}
         />
+        <TouchableOpacity onPress={this.updateSecureTextEntry.bind(this)}>
+          {this.state.secureTextEntry ? (
+            <Feather name="eye-off" color="grey" size={20} />
+          ) : (
+            <Feather name="eye" color="black" size={20} />
+          )}
+        </TouchableOpacity>
 
-        <View>
+        <View style={styles.loginButtonContainer}>
           <TouchableOpacity
             onPress={() => {
               this.UpdateRecord();
             }}
           >
-            <Text>Update</Text>
+            <Text style={styles.loginButtonText}>Update</Text>
           </TouchableOpacity>
         </View>
       </View>

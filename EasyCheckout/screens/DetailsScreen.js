@@ -36,6 +36,15 @@ function DetailsScreen({ route, navigation }) {
           })
         }
       />
+
+      <Button
+        title="View Checkout Cart"
+        onPress={() =>
+          navigation.navigate("CheckoutScreen", {
+            userId: userId,
+          })
+        }
+      />
       <Button title="Go back" onPress={() => navigation.goBack()} />
     </View>
   );

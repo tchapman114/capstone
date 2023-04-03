@@ -5,8 +5,7 @@ $scancode = $decodedData['scancode'];
 $SQL = "SELECT * FROM product WHERE scancode = '$scancode'";
 
 $exeSQL = mysqli_query($conn, $SQL);
-$arrayu = mysqli_fetch_array($exeSQL);
+$result = mysqli_fetch_all($exeSQL, MYSQLI_ASSOC);
 
-$response[] = array($arrayu);
-echo json_encode($response);
+echo json_encode($result);
 ?>

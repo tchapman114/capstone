@@ -1,6 +1,15 @@
 import { Component } from "react";
-import { View, TextInput, Button, TouchableOpacity, Text } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  Image,
+  ScrollView,
+  Button,
+} from "react-native";
+import { NavigationEvents } from "react-navigation";
 import Transaction from "../components/Transaction";
+import styles from "../style/style";
 
 export default class UserProfile extends Component {
   constructor(props) {
@@ -15,12 +24,18 @@ export default class UserProfile extends Component {
   }
 
   componentDidMount = () => {
+    console.log("CALLED");
+    this.FetchUserInfo();
+    this.FetchTransaction();
+  };
+
+  FetchUserInfo = () => {
     var userId = this.state.userId;
 
     var Data = {
       id: userId,
     };
-    fetch("http://localhost/capstone/api/fetchForUpdate.php", {
+    fetch("http://192.168.1.67:80/capstone/api/fetchForUpdate.php", {
       method: "POST",
       body: JSON.stringify(Data),
     })
@@ -40,14 +55,13 @@ export default class UserProfile extends Component {
       });
   };
 
-  // TODO Screen load
   FetchTransaction = () => {
     var userId = this.state.userId;
 
     var Data = {
       id: userId,
     };
-    fetch("http://localhost/capstone/api/getTransaction.php", {
+    fetch("http://192.168.1.67:80/capstone/api/getTransaction.php", {
       method: "POST",
       body: JSON.stringify(Data),
     })
@@ -64,38 +78,64 @@ export default class UserProfile extends Component {
 
   render() {
     return (
-      <View>
-        <Text>
-          {this.state.firstname} {this.state.lastname}
-        </Text>
-        <View>
-          <TouchableOpacity
-            onPress={() => {
-              this.props.navigation.navigate("EditProfile", {
+      <>
+        <View style={{ backgroundColor: "white" }}>
+          <View style={styles.image_editContainer}>
+            <Image
+              style={{ width: 90, height: 90, marginLeft: 148 }}
+              source={require("../assets/profile.png")}
+            />
+          </View>
+          <Text style={styles.userProfileName}>
+            {this.state.firstname} {this.state.lastname}
+          </Text>
+          <View style={styles.imageBox}>
+            <View style={styles.image_editContainer}>
+              <Image
+                style={{ width: 15, height: 15 }}
+                source={require("../assets/editprofile_icon.png")}
+              />
+            </View>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate("EditProfile", {
+                  userId: this.state.userId,
+                });
+              }}
+            >
+              <Text style={styles.editProfileText}>Edit Profile </Text>
+            </TouchableOpacity>
+          </View>
+          <Button
+            title="Go back"
+            onPress={() =>
+              this.props.navigation.navigate("DetailsScreen", {
                 userId: this.state.userId,
-              });
-            }}
-          >
-            <Text>Edit Profile CLICK</Text>
-          </TouchableOpacity>
+              })
+            }
+          />
+          <View style={styles.latestTransactionContainer}>
+            <Text style={{ fontWeight: "bold" }}> LATEST TRANSACTIONS</Text>
+          </View>
+          <View>
+            <ScrollView>
+              {this.state.dataTransaction?.length > 0 ? ( // if there is data from api
+                <>
+                  {this.state.dataTransaction?.map((data, i) => (
+                    <Transaction
+                      key={i} // iterator to filter though api data
+                      total={data?.total} // display name if exists
+                      date={data?.date} // display location if exists
+                    />
+                  ))}
+                </>
+              ) : (
+                <Text>No Transactions Yet!</Text>
+              )}
+            </ScrollView>
+          </View>
         </View>
-        <Text>Latest Transactions:</Text>
-        <View onLayout={() => this.FetchTransaction()}>
-          {this.state.dataTransaction?.length > 0 ? ( // if there is data from api
-            <>
-              {this.state.dataTransaction?.map((data, i) => (
-                <Transaction
-                  key={i} // iterator to filter though api data
-                  total={data?.total} // display name if exists
-                  date={data?.date} // display location if exists
-                />
-              ))}
-            </>
-          ) : (
-            <Text>No Transactions Yet!</Text>
-          )}
-        </View>
-      </View>
+      </>
     );
   }
 }

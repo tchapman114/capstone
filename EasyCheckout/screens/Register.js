@@ -43,7 +43,7 @@ export default class Register extends Component {
     } else if (/[ ]/.test(password)) {
       alert("Don't include space in password!!!");
     } else {
-      var InsertAPIURL = "http://localhost/capstone/api/register.php"; //API to render register
+      var InsertAPIURL = "http://192.168.1.67:80/capstone/api/register.php"; //API to render register
 
       var headers = {
         Accept: "application/json",

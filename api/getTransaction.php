@@ -2,7 +2,7 @@
 include('database.php');
 $id = $decodedData['id']['userId'];
 
-$SQL = "SELECT * FROM transaction WHERE user = '$id'";
+$SQL = "SELECT * FROM transaction WHERE user = '$id' ORDER BY date DESC";
 
 $exeSQL = mysqli_query($conn, $SQL);
 

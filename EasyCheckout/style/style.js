@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     borderColor: "#817E7E",
     marginTop: 5,
     borderRadius: 5,
+    backgroundColor: "#ECECEC",
   },
   inputContainer: {
     marginTop: 50,
@@ -36,6 +37,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 5,
     marginBottom: 10,
+    backgroundColor: "#ECECEC",
   },
   loginButtonContainer: {
     marginTop: 30,
@@ -86,6 +88,62 @@ const styles = StyleSheet.create({
     backgroundColor: "#C597FF",
     //marginLeft: 110,
     //borderRadius: 30
+  },
+  latestTransactionContainer: {
+    marginTop: 60,
+    justifyContent: "center",
+    textAlign: "left",
+    height: 50,
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "#000000",
+    backgroundColor: "#C597FF",
+  },
+  DatetransactionContainer: {
+    //marginTop:150,
+    justifyContent: "center",
+    textAlign: "left",
+    height: 40,
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "#000000",
+    backgroundColor: "#E9E9E9",
+  },
+  transactionContainer: {
+    flexDirection: "row",
+    //justifyContent:'center',
+    textAlign: "left",
+    height: 60,
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "#000000",
+    backgroundColor: "white",
+  },
+  editProfileText: {
+    marginTop: 30,
+    fontSize: 11,
+    color: "black",
+    justifyContent: "center",
+    textAlign: "center",
+    width: 75,
+    //borderWidth: 1,
+  },
+  userProfileName: {
+    marginTop: 90,
+    fontSize: 20,
+    color: "black",
+    textAlign: "center",
+    width: "100%",
+    //borderWidth: 1,
+  },
+  imageBox: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  image_editContainer: {
+    height: 17,
+    borderColor: "#817E7E",
+    marginTop: 30,
   },
 });
 
