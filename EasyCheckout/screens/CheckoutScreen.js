@@ -171,10 +171,9 @@ export default class CheckoutScreen extends Component {
           {this.state.dataFetch?.length > 0 ? ( // if there is data from api
             <>
               {this.state.dataFetch?.map((data, i) => (
-                <>
+                <View key={i}>
                   <>
                     <Item
-                      key={i}
                       name={data?.name} // display product name if exists
                       price={data?.price} // display product price if exists
                       productId={data?.product_id}
@@ -188,7 +187,7 @@ export default class CheckoutScreen extends Component {
                   >
                     <Ionicons name="md-trash" size={25} color="#ee4d2d" />
                   </TouchableOpacity>
-                </>
+                </View>
               ))}
               <View>
                 <Text>OrderTotal: $ {this.state.total}</Text>

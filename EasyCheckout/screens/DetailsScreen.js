@@ -12,9 +12,9 @@ function DetailsScreen({ route, navigation }) {
       <Text>Details Screen</Text>
       <Text>userId: {JSON.stringify(userId)}</Text>
       <Button
-        title="Barcode Screen"
+        title="ScannerScreen"
         onPress={() =>
-          navigation.navigate("BarcodeScan", {
+          navigation.navigate("ScannerScreen", {
             userId: userId,
           })
         }
