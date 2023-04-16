@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { View, Text } from "react-native";
+import styles from "../style/style";
 
 export default class Item extends Component {
   constructor(props) {
@@ -34,10 +35,12 @@ export default class Item extends Component {
 
   render() {
     return (
-      <View>
-        <Text>Description: {this.props.name}</Text>
-        <Text>Price: {this.props.price}</Text>
-        <Text>Quantity: {this.state.qty}</Text>
+      <View style={styles.Cartitems}>
+        <View>
+          <Text>Description: {this.props.name} </Text>
+          <Text>Price: {this.props.price} </Text>
+          <Text>Quantity: {this.state.qty} </Text>
+        </View>
       </View>
     );
   }

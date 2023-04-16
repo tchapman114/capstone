@@ -7,7 +7,6 @@ import {
   ScrollView,
   Button,
 } from "react-native";
-import { NavigationEvents } from "react-navigation";
 import Transaction from "../components/Transaction";
 import styles from "../style/style";
 
@@ -79,12 +78,25 @@ export default class UserProfile extends Component {
   render() {
     return (
       <>
-        <View style={{ backgroundColor: "white" }}>
-          <View style={styles.image_editContainer}>
-            <Image
-              style={{ width: 90, height: 90, marginLeft: 148 }}
-              source={require("../assets/profile.png")}
-            />
+        <View style={{ backgroundColor: "white", flex: 1 }}>
+          <View
+            style={{ backgroundColor: "#C597FF", width: "100%", height: 120 }}
+          >
+            <View style={styles.backArrowContainer}>
+              <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                <Image
+                  style={{ width: 35, height: 35 }}
+                  source={require("../assets/arrowicon.png")}
+                ></Image>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.image_editContainer}>
+              <Image
+                style={{ width: 90, height: 90, marginLeft: 148 }}
+                source={require("../assets/profile.png")}
+              />
+            </View>
           </View>
           <Text style={styles.userProfileName}>
             {this.state.firstname} {this.state.lastname}
@@ -92,7 +104,7 @@ export default class UserProfile extends Component {
           <View style={styles.imageBox}>
             <View style={styles.image_editContainer}>
               <Image
-                style={{ width: 15, height: 15 }}
+                style={{ width: 15, height: 15, marginTop: 30 }}
                 source={require("../assets/editprofile_icon.png")}
               />
             </View>
@@ -106,18 +118,11 @@ export default class UserProfile extends Component {
               <Text style={styles.editProfileText}>Edit Profile </Text>
             </TouchableOpacity>
           </View>
-          <Button
-            title="Go back"
-            onPress={() =>
-              this.props.navigation.navigate("DetailsScreen", {
-                userId: this.state.userId,
-              })
-            }
-          />
+
           <View style={styles.latestTransactionContainer}>
             <Text style={{ fontWeight: "bold" }}> LATEST TRANSACTIONS</Text>
           </View>
-          <View>
+          <View style={{ flex: 1 }}>
             <ScrollView>
               {this.state.dataTransaction?.length > 0 ? ( // if there is data from api
                 <>
@@ -130,7 +135,18 @@ export default class UserProfile extends Component {
                   ))}
                 </>
               ) : (
-                <Text>No Transactions Yet!</Text>
+                <View>
+                  <Image
+                    style={{
+                      width: 350,
+                      height: 350,
+                      marginLeft: 25,
+                      marginTop: 10,
+                    }}
+                    source={require("../assets/transaction2.jpg")}
+                  ></Image>
+                  {/* <Text style={{ fontWeight: "bold", textAlign:"center",marginTop:50 }}>No Transactions Yet!</Text> */}
+                </View>
               )}
             </ScrollView>
           </View>

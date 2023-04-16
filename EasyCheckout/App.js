@@ -8,6 +8,7 @@ import UserProfile from "./screens/UserProfile";
 import CheckoutScreen from "./screens/CheckoutScreen";
 import CheckoutCompleteScreen from "./screens/CheckoutCompleteScreen";
 import ScannerScreen from "./screens/ScannerScreen";
+import HomeScreen from "./screens/HomeScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,10 +21,19 @@ export default function App() {
         }}
       >
         <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen
+          name="Register"
+          component={Register}
+          initialParams={{ userId: null }}
+        />
         <Stack.Screen
           name="DetailsScreen"
           component={DetailsScreen}
+          initialParams={{ userId: 0 }}
+        />
+        <Stack.Screen
+          name="HomeScreen"
+          component={HomeScreen}
           initialParams={{ userId: 0 }}
         />
         <Stack.Screen

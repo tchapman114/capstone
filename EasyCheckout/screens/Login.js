@@ -82,6 +82,20 @@ export default class Login extends Component {
     const { navigation } = this.props;
     return (
       <View style={styles.viewStyle}>
+        <View>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: "bold",
+              textAlign: "left",
+              marginTop: 60,
+              padding: 30,
+              marginBottom: 30,
+            }}
+          >
+            LOGIN
+          </Text>
+        </View>
         <View style={styles.inputContainer}>
           <Text>Email</Text>
           <TextInput
@@ -91,7 +105,7 @@ export default class Login extends Component {
           />
         </View>
 
-        <View>
+        <View style={styles.inputContainer}>
           <Text>Password</Text>
           <TextInput
             style={styles.textInput}

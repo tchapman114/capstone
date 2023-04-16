@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TextInput, Button, TouchableOpacity, Text } from "react-native";
+import { View, TextInput, TouchableOpacity, Text, Image } from "react-native";
 import styles from "../style/style.js";
 import Feather from "react-native-vector-icons/Feather";
 
@@ -93,7 +93,29 @@ export default class Register extends Component {
   render() {
     return (
       <View style={styles.viewStyle}>
-        <Text>Name*</Text>
+        {/*Tara will make the navigation to login screen*/}
+        <View style={styles.BackContainer}>
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate("Login", {
+                userId: null,
+              })
+            }
+          >
+            <Image
+              style={{ width: 35, height: 35 }}
+              source={require("../assets/arrowicon.png")}
+            ></Image>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.TitleContainer}>
+          <Text style={{ textAlign: "center", fontSize: 24 }}>
+            Registration
+          </Text>
+        </View>
+
+        <Text> Name*</Text>
         <View style={styles.registrationInputContainer}>
           <TextInput
             placeholder="Enter First Name"
@@ -107,38 +129,43 @@ export default class Register extends Component {
           />
         </View>
 
-        <Text style={{ marginTop: 15 }}>Email Address*</Text>
-        <TextInput
-          placeholder="Enter Email"
-          style={styles.textInput}
-          onChangeText={(email) => this.setState({ email })}
-        />
-        <Text>Phone Number*</Text>
-        <TextInput
-          placeholder="Enter Phone Number"
-          style={styles.textInput}
-          onChangeText={(phone) => this.setState({ phone })}
-        />
-        <Text>Credit Card*</Text>
-        <TextInput
-          placeholder="Enter Card Number"
-          style={styles.textInput}
-          onChangeText={(cardnumber) => this.setState({ cardnumber })}
-        />
-        <Text>Password*</Text>
-        <TextInput
-          placeholder="Enter Password"
-          secureTextEntry={this.state.secureTextEntry ? true : false}
-          style={styles.textInput}
-          onChangeText={(password) => this.setState({ password })}
-        />
-        <TouchableOpacity onPress={this.updateSecureTextEntry.bind(this)}>
-          {this.state.secureTextEntry ? (
-            <Feather name="eye-off" color="grey" size={20} />
-          ) : (
-            <Feather name="eye" color="black" size={20} />
-          )}
-        </TouchableOpacity>
+        <View style={{ padding: 5 }}>
+          <Text style={{ marginTop: 15 }}>Email Address*</Text>
+          <TextInput
+            placeholder="Enter Email"
+            style={styles.textInput}
+            onChangeText={(email) => this.setState({ email })}
+          />
+          <Text>Phone Number*</Text>
+          <TextInput
+            placeholder="Enter Phone Number"
+            style={styles.textInput}
+            onChangeText={(phone) => this.setState({ phone })}
+          />
+          <Text>Credit Card*</Text>
+          <TextInput
+            placeholder="Enter Card Number"
+            style={styles.textInput}
+            onChangeText={(cardnumber) => this.setState({ cardnumber })}
+          />
+          <Text>Password*</Text>
+          <TextInput
+            placeholder="Enter Password"
+            secureTextEntry={this.state.secureTextEntry ? true : false}
+            style={styles.textInput}
+            onChangeText={(password) => this.setState({ password })}
+          />
+        </View>
+
+        <View style={{ marginLeft: 10 }}>
+          <TouchableOpacity onPress={this.updateSecureTextEntry.bind(this)}>
+            {this.state.secureTextEntry ? (
+              <Feather name="eye-off" color="grey" size={20} />
+            ) : (
+              <Feather name="eye" color="black" size={20} />
+            )}
+          </TouchableOpacity>
+        </View>
 
         <View style={styles.loginButtonContainer}>
           <TouchableOpacity

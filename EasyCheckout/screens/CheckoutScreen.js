@@ -1,7 +1,9 @@
 import { Component } from "react";
-import { View, Text, TouchableOpacity, Alert } from "react-native";
+import { View, Text, TouchableOpacity, Alert, Image } from "react-native";
 import Item from "../components/Item";
 import { Ionicons } from "@expo/vector-icons";
+import styles from "../style/style";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default class CheckoutScreen extends Component {
   constructor(props) {
@@ -82,7 +84,6 @@ export default class CheckoutScreen extends Component {
     })
       .then((Response) => Response.json())
       .then((Response) => {
-        alert(Response[0].Message);
         if (Response[0].Message == "Success") {
           console.log("true");
           this.props.navigation.navigate("CheckoutCompleteScreen", {
@@ -165,46 +166,98 @@ export default class CheckoutScreen extends Component {
   render() {
     const { dataFetch } = this.state;
     return (
-      <View style={{ marginTop: 30 }}>
-        <Text>Items Scanned:</Text>
-        <View>
+      <View style={{ marginTop: 30, backgroundColor: "white", flex: 1 }}>
+        <View style={styles.ProfileBackContainer}>
+          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+            <Image
+              style={{ width: 35, height: 35, marginLeft: 5, marginTop: 10 }}
+              source={require("../assets/arrowicon.png")}
+            ></Image>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.TitleContainer}>
+          <Text style={{ textAlign: "center", fontSize: 20 }}>
+            Shopping Cart
+          </Text>
+        </View>
+        {/* <Text>Items Scanned:</Text> */}
+        <View style={{ flex: 1 }}>
           {this.state.dataFetch?.length > 0 ? ( // if there is data from api
             <>
-              {this.state.dataFetch?.map((data, i) => (
-                <View key={i}>
-                  <>
-                    <Item
-                      name={data?.name} // display product name if exists
-                      price={data?.price} // display product price if exists
-                      productId={data?.product_id}
-                      userId={data?.user_id}
-                    />
-                  </>
-                  {/* Handles deletion of scanned items */}
-                  <TouchableOpacity
-                    style={[{ width: 32, height: 32 }]}
-                    onPress={() => this.deleteHandler(i)}
-                  >
-                    <Ionicons name="md-trash" size={25} color="#ee4d2d" />
-                  </TouchableOpacity>
-                </View>
-              ))}
-              <View>
-                <Text>OrderTotal: $ {this.state.total}</Text>
+              <View style={styles.ScannedItemsHeader}>
+                <Text style={{ fontWeight: "bold" }}> Scanned Items</Text>
               </View>
-              <View>
+              <ScrollView>
+                {this.state.dataFetch?.map((data, i) => (
+                  <View key={i}>
+                    <>
+                      <Item
+                        name={data?.name} // display product name if exists
+                        price={data?.price} // display product price if exists
+                        productId={data?.product_id}
+                        userId={data?.user_id}
+                      />
+                    </>
+                    {/*Handles deletion of scanned items*/}
+                    <View style={styles.trashPlacement}>
+                      <TouchableOpacity
+                        //style={[{ width: 32, height: 32,}]}
+                        onPress={() => this.deleteHandler(i)}
+                      >
+                        <Ionicons name="md-trash" size={25} color="white" />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                ))}
+              </ScrollView>
+              <View style={{ paddingLeft: 5 }}>
+                <Text
+                  style={{ fontWeight: "bold", padding: 10, marginTop: 10 }}
+                >
+                  OrderTotal: $ {this.state.total}
+                </Text>
+              </View>
+              <View style={styles.PlaceOrderButton}>
                 <TouchableOpacity
                   onPress={() => {
                     this.InsertTransaction();
                     this.disableAllProducts();
                   }}
                 >
-                  <Text>Place Order</Text>
+                  <Text style={styles.loginButtonText}>Place Order</Text>
                 </TouchableOpacity>
               </View>
             </>
           ) : (
-            <Text>No Items Scanned Yet!</Text>
+            <View>
+              <Image
+                style={{
+                  width: 360,
+                  height: 250,
+                  marginLeft: 10,
+                  marginTop: 150,
+                }}
+                source={require("../assets/emptycarticon2.png")}
+              ></Image>
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  marginTop: 10,
+                }}
+              >
+                Your cart is empty!
+              </Text>
+              <Text
+                style={{
+                  textAlign: "center",
+                  marginTop: 5,
+                  marginBottom: "100%",
+                }}
+              >
+                Start scanning to fill up your cart!
+              </Text>
+            </View>
           )}
         </View>
       </View>

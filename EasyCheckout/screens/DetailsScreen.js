@@ -12,6 +12,14 @@ function DetailsScreen({ route, navigation }) {
       <Text>Details Screen</Text>
       <Text>userId: {JSON.stringify(userId)}</Text>
       <Button
+        title="HomeScreen"
+        onPress={() =>
+          navigation.navigate("HomeScreen", {
+            userId: userId,
+          })
+        }
+      />
+      <Button
         title="ScannerScreen"
         onPress={() =>
           navigation.navigate("ScannerScreen", {

@@ -29,7 +29,6 @@ export default class Transaction extends Component {
             ${this.props.total}
           </Text>
         </View>
-        {/* <Text>{this.props.key}</Text> */}
       </View>
     );
   }
