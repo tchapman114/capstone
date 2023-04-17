@@ -54,11 +54,8 @@ export default class Login extends Component {
             console.log("true");
             id = Response[0].Id;
             console.log("UserId: ", id);
-            // this.props.navigation.navigate("DetailsScreen", {
-            //   userId: id,
-            // });
             // Storing id, using routes to pass id throughout app and can be used in other queries
-            this.props.navigation.navigate("DetailsScreen", {
+            this.props.navigation.navigate("HomeScreen", {
               userId: id,
             });
           }

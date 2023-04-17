@@ -1,75 +1,115 @@
 import React, { useState } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Modal,
+} from "react-native";
 
-export default function HomeScreen() {
-  const [showInfo1, setShowInfo1] = useState(false); // state variable to toggle the visibility of the first info
-  const [showInfo2, setShowInfo2] = useState(false); // state variable to toggle the visibility of the second info
+const ButtonInfoModal = ({ title, info, visible, onClose }) => {
+  return (
+    <Modal visible={visible} animationType="slide">
+      <View style={styles.modalContainer}>
+        <Text style={styles.modalTitle}>{title}</Text>
+        <ScrollView style={styles.modalInfo}>
+          <Text>{info}</Text>
+        </ScrollView>
+        <TouchableOpacity style={styles.modalButton} onPress={onClose}>
+          <Text style={styles.modalButtonText}>Close</Text>
+        </TouchableOpacity>
+      </View>
+    </Modal>
+  );
+};
 
-  const handleButtonClick1 = () => {
-    setShowInfo1(true); // show the first info
-  };
+export default function HomeScreen({ route, navigation }) {
+  const { userId } = route.params;
+  console.log("UserId: ", userId);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalInfo, setModalInfo] = useState("");
 
-  const handleButtonClick2 = () => {
-    setShowInfo2(true); // show the second info
-  };
-
-  const handleInfoClose1 = () => {
-    setShowInfo1(false); // hide the first info
-  };
-
-  const handleInfoClose2 = () => {
-    setShowInfo2(false); // hide the second info
+  const handleButtonPress = (title, info) => {
+    setModalTitle(title);
+    setModalInfo(info);
+    setModalVisible(true);
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Easy Checkout</Text>
-      <Text style={styles.title}></Text>
-      <Text style={styles.title}></Text>
-      <Text style={styles.title}>Welcome To</Text>
-      <Text style={styles.title}>The Future Of Shopping!</Text>
-      <Text style={styles.title}></Text>
-      <Text style={styles.title}></Text>
-      <Text style={styles.title}></Text>
-      <View style={styles.buttonContainer}>
-        <View style={styles.button}>
-          {!showInfo1 && (
-            <Button title="Show Project Info" onPress={handleButtonClick1} />
-          )}
-          {showInfo1 && (
-            <Button title="Return To Main Menu" onPress={handleInfoClose1} />
-          )}
-        </View>
-        <View style={styles.button}>
-          {!showInfo2 && (
-            <Button title="Show Team Info" onPress={handleButtonClick2} />
-          )}
-          {showInfo2 && (
-            <Button title="Return To Main Menu" onPress={handleInfoClose2} />
-          )}
-        </View>
-      </View>
-      {showInfo1 && (
-        <View style={styles.infoContainer}>
-          <Text style={styles.infoText}>
-            Cross-platform mobile application that allows users to scan items as
-            they shop and perform a simple checkout process
-          </Text>
-          <Text style={styles.infoText}>
-            Users can scan from a set list of items and perform a transaction
-          </Text>
-          <Text style={styles.infoText}>
-            Prevents customers from waiting in long checkout lines
-          </Text>
-        </View>
-      )}
-      {showInfo2 && (
-        <View style={styles.infoContainer}>
-          <Text style={styles.infoText}>
-            The Team: Tara Chapman, Cam Schwartz, Gianni Menassa, Paige Craig
-          </Text>
-        </View>
-      )}
+      <Text style={styles.title}>WELCOME TO EASY CHECKOUT!</Text>
+      <Text style={styles.title}>Shopping Redefined!</Text>
+      <ScrollView style={styles.scroll}>
+        {/* Checkout Cart */}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() =>
+            navigation.navigate("CheckoutScreen", {
+              userId: userId,
+            })
+          }
+        >
+          <Text style={styles.buttonText}>Cart</Text>
+        </TouchableOpacity>
+
+        {/* Barcode Scanner */}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() =>
+            navigation.navigate("ScannerScreen", {
+              userId: userId,
+            })
+          }
+        >
+          <Text style={styles.buttonText}>Barcode Scanner</Text>
+        </TouchableOpacity>
+
+        {/* View Profile */}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() =>
+            navigation.navigate("UserProfile", {
+              userId: userId,
+            })
+          }
+        >
+          <Text style={styles.buttonText}>Edit User Profile</Text>
+        </TouchableOpacity>
+
+        {/* Project Info */}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() =>
+            handleButtonPress(
+              "Project Info",
+              "Cross-platform mobile application that allows users to scan items as they shop and perform a simple checkout process, Users can scan from a set list of items and perform a transaction, Prevents customers from waiting in long checkout lines"
+            )
+          }
+        >
+          <Text style={styles.buttonText}>Project Info</Text>
+        </TouchableOpacity>
+
+        {/* Team Info */}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() =>
+            handleButtonPress(
+              "Team Info",
+              "The Team:  Tara Chapman, Cam Schwartz, Gianni Menassa, Paige Craig"
+            )
+          }
+        >
+          <Text style={styles.buttonText}>Meet the Developers</Text>
+        </TouchableOpacity>
+      </ScrollView>
+      <ButtonInfoModal
+        visible={modalVisible}
+        title={modalTitle}
+        info={modalInfo}
+        onClose={() => setModalVisible(false)}
+      />
     </View>
   );
 }
@@ -77,44 +117,30 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
   title: {
-    fontSize: 36,
+    fontSize: 26,
     fontWeight: "bold",
-    marginBottom: 20,
-    color: "#4A4A4A",
-    textShadowColor: "#BEBEBE",
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 1,
+    marginBottom: 50,
+    textAlign: "center",
   },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginBottom: 20,
+  scroll: {
+    maxHeight: 200,
+    width: "100%",
   },
   button: {
-    marginHorizontal: 10,
-  },
-  infoContainer: {
+    backgroundColor: "#A020F0",
     padding: 20,
-    backgroundColor: "#F5F5F5",
-    marginBottom: 20,
     borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#CCCCCC",
-    width: "80%",
-    shadowColor: "#BEBEBE",
-    shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 2,
+    marginTop: 20,
   },
-  infoText: {
-    fontSize: 16,
-    marginBottom: 10,
-    color: "#4A4A4A",
+  buttonText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
