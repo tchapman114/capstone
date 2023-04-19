@@ -12,7 +12,7 @@ export default class CheckoutCompleteScreen extends Component {
 
   render() {
     return (
-      <View style={{ marginTop: 30, backgroundColor: "white" }}>
+      <View style={{ marginTop: 40, backgroundColor: "white" }}>
         <Image
           style={{ width: 360, height: 250, marginLeft: 10, marginTop: 120 }}
           source={require("../assets/orderplacedicon.png")}
@@ -20,7 +20,7 @@ export default class CheckoutCompleteScreen extends Component {
         <View style={styles.TransactionCompleteOrderButton}>
           <TouchableOpacity
             onPress={() =>
-              this.props.navigation.navigate("DetailsScreen", {
+              this.props.navigation.navigate("HomeScreen", {
                 userId: this.state.userId.userId,
               })
             }

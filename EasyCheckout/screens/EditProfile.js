@@ -66,7 +66,7 @@ export default class EditProfile extends Component {
             {
               text: "OK",
               onPress: () =>
-                this.props.navigation.navigate("DetailsScreen", {
+                this.props.navigation.navigate("HomeScreen", {
                   userId: this.state.userId.userId,
                 }),
             },
@@ -125,7 +125,13 @@ export default class EditProfile extends Component {
     return (
       <View style={styles.viewStyle}>
         <View style={styles.BackContainer}>
-          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate("HomeScreen", {
+                userId: this.state.userId.userId,
+              })
+            }
+          >
             <Image
               style={{ width: 35, height: 35 }}
               source={require("../assets/arrowicon.png")}

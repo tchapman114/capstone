@@ -166,7 +166,7 @@ export default class CheckoutScreen extends Component {
   render() {
     const { dataFetch } = this.state;
     return (
-      <View style={{ marginTop: 30, backgroundColor: "white", flex: 1 }}>
+      <View style={{ marginTop: 40, backgroundColor: "white", flex: 1 }}>
         <View style={styles.ProfileBackContainer}>
           <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
             <Image
