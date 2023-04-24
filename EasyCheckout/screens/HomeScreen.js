@@ -9,36 +9,11 @@ import {
   Alert,
 } from "react-native";
 
-// const ButtonInfoModal = ({ title, info, visible, onClose, Image }) => {
-//   return (
-//     <Modal visible={visible} animationType="slide">
-//       <View style={styles.modalContainer}>
-//          <Text style={styles.modalTitle}>{title}</Text>
-//         <ScrollView style={styles.modalInfo}>
-//           <Text>{info}</Text>
-//         </ScrollView>
-
-//         {/* <TouchableOpacity style={{position:'absolute', top:15,left:10}} onPress={onClose}>
-//           <Image
-//               style={{ width: 35, height: 35 }}
-//               source={require("../assets/arrowicon.png")}>
-//           </Image>
-//         </TouchableOpacity> */}
-//         <TouchableOpacity style={styles.modalButton} onPress={onClose}>
-//           <Text style={styles.modalButtonText}>Close</Text>
-//         </TouchableOpacity>
-//       </View>
-//     </Modal>
-//   );
-// };
-
 export default function HomeScreen({ route, navigation }) {
   const { userId } = route.params;
   console.log("UserId: ", userId);
   const [modalTeamVisible, setModalTeamVisible] = useState(false);
   const [modalProjectVisible, setModalProjectVisible] = useState(false);
-  const [modalTitle, setModalTitle] = useState("");
-  const [modalInfo, setModalInfo] = useState("");
 
   return (
     <View style={styles.container}>
@@ -51,7 +26,7 @@ export default function HomeScreen({ route, navigation }) {
             left: 55,
           }}
         >
-          Welcome,
+          Profile
         </Text>
         {/* View User's Profile */}
         <View style={{ position: "absolute", top: 2, left: 2 }}>
@@ -62,6 +37,7 @@ export default function HomeScreen({ route, navigation }) {
               })
             }
           >
+            {/* Profile icon, indicating they can navigate to edit profile info */}
             <Image
               style={{ width: 40, height: 40, marginLeft: 5, marginTop: 10 }}
               source={require("../assets/profile.png")}
@@ -274,13 +250,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   topBarContainer: {
-    //color: "#C597FF",
     borderRadius: 1,
     backgroundColor: "#C597FF",
     width: "100%",
     height: 60,
     position: "absolute",
-    top: 30,
+    top: 45,
   },
   infoContainer: {
     height: 50,
@@ -291,7 +266,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    //marginTop: 22,
   },
   modalView: {
     margin: 20,

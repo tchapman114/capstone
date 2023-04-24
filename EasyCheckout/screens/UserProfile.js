@@ -23,7 +23,6 @@ export default class UserProfile extends Component {
   }
 
   componentDidMount = () => {
-    console.log("CALLED");
     this.FetchUserInfo();
     this.FetchTransaction();
   };

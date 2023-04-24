@@ -2,7 +2,7 @@
 include('database.php');
 
 $email = $decodedData['email'];
-$password = $decodedData['password']; //password is hashed
+$password = md5($decodedData['password']); //password is hashed
 
 $SQL = "SELECT * FROM user WHERE email = '$email'";
 $exeSQL = mysqli_query($conn, $SQL);

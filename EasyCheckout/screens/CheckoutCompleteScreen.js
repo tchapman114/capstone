@@ -12,7 +12,7 @@ export default class CheckoutCompleteScreen extends Component {
 
   render() {
     return (
-      <View style={{ marginTop: 40, backgroundColor: "white" }}>
+      <View style={{ marginTop: 35, backgroundColor: "white" }}>
         <Image
           style={{ width: 360, height: 250, marginLeft: 10, marginTop: 120 }}
           source={require("../assets/orderplacedicon.png")}

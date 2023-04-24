@@ -38,7 +38,7 @@ export default class Item extends Component {
       <View style={styles.Cartitems}>
         <View>
           <Text>Description: {this.props.name} </Text>
-          <Text>Price: {this.props.price} </Text>
+          <Text>Price: ${this.props.price} </Text>
           <Text>Quantity: {this.state.qty} </Text>
         </View>
       </View>

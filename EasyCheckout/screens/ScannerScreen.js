@@ -39,6 +39,7 @@ class ScannerScreen extends Component {
       .then((Response) => Response.json())
       .then((Response) => {
         console.log("getScancode Response: ", Response);
+        // Setting states of product information
         this.setState({
           dataFetch: Response,
         });
@@ -69,9 +70,6 @@ class ScannerScreen extends Component {
       .then((Response) => Response.json())
       .then((Response) => {
         alert(Response[0].Message);
-        if (Response[0].Message == "Success") {
-          console.log("Successfully inserted record in user_product Table");
-        }
       })
       .catch((error) => {});
   };
@@ -139,13 +137,10 @@ const styles = StyleSheet.create({
     height: 300,
     width: 400,
     overflow: "hidden",
-    //borderRadius: 30,
     backgroundColor: "#C597FF",
-    //marginTop: 40,
     marginBottom: 20,
   },
   loginButtonContainer: {
-    //marginTop:30,
     justifyContent: "center",
     alignItems: "center",
     height: 45,
@@ -163,11 +158,9 @@ const styles = StyleSheet.create({
   },
   ScanContainer: {
     justifyContent: "center",
-    //borderWidth: 1,
     height: 70,
     width: 70,
     borderColor: "#817E7E",
-    //backgroundColor: "#C597FF",
     marginTop: 70,
     textAlign: "center",
   },
@@ -176,9 +169,7 @@ const styles = StyleSheet.create({
     height: 45,
     width: 45,
     borderColor: "#C597FF",
-    //backgroundColor:"blue",
     marginRight: 325,
-    //marginTop:10
   },
   TitleContainer: {
     justifyContent: "center",

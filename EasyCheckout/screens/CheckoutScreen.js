@@ -166,7 +166,7 @@ export default class CheckoutScreen extends Component {
   render() {
     const { dataFetch } = this.state;
     return (
-      <View style={{ marginTop: 40, backgroundColor: "white", flex: 1 }}>
+      <View style={{ marginTop: 35, backgroundColor: "white", flex: 1 }}>
         <View style={styles.ProfileBackContainer}>
           <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
             <Image
@@ -214,7 +214,7 @@ export default class CheckoutScreen extends Component {
                 <Text
                   style={{ fontWeight: "bold", padding: 10, marginTop: 10 }}
                 >
-                  OrderTotal: $ {this.state.total}
+                  Order Total: $ {this.state.total}
                 </Text>
               </View>
               <View style={styles.PlaceOrderButton}>

@@ -8,7 +8,6 @@ import {
   Image,
 } from "react-native";
 import styles from "../style/style";
-import Feather from "react-native-vector-icons/Feather";
 
 export default class EditProfile extends Component {
   constructor(props) {
@@ -180,16 +179,16 @@ export default class EditProfile extends Component {
             value={this.state.cardnumber}
             onChangeText={(cardnumber) => this.setState({ cardnumber })}
           />
-          <Text>Password*</Text>
+          {/* <Text>Password*</Text>
           <TextInput
             secureTextEntry={this.state.secureTextEntry ? true : false}
             style={styles.textInput}
             value={this.state.password}
             onChangeText={(password) => this.setState({ password })}
-          />
+          /> */}
         </View>
 
-        <View style={{ marginLeft: 10 }}>
+        {/* <View style={{ marginLeft: 10 }}>
           <TouchableOpacity onPress={this.updateSecureTextEntry.bind(this)}>
             {this.state.secureTextEntry ? (
               <Feather name="eye-off" color="grey" size={20} />
@@ -197,7 +196,7 @@ export default class EditProfile extends Component {
               <Feather name="eye" color="black" size={20} />
             )}
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         <View style={styles.loginButtonContainer}>
           <TouchableOpacity

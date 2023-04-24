@@ -2,10 +2,9 @@
 include('database.php');
 $userId = $decodedData['userId'];
 
-// Distinct = does not show duplicates
 $SQL = "SELECT SUM(product.price) as total 
 FROM product 
-INNER JOIN user_product on product.id=user_product.product_id
+INNER JOIN user_product on product.id = user_product.product_id
 WHERE (user_product.user_id = '$userId')
 AND (user_product.isScanned = 'Y')";
 
